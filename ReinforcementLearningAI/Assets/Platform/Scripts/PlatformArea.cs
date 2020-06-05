@@ -4,6 +4,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 // Gustaf Ybring och Patric Wåhlin
+
+// The area
 public class PlatformArea : MonoBehaviour
 {
     public GameObject[] platforms;

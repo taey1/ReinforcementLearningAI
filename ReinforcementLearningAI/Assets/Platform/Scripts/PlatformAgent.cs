@@ -6,6 +6,8 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 
 // Gustaf Ybring och Patric Wåhlin
+
+// The agent
 public class PlatformAgent : Agent
 {
     public GameObject spawnArea;
