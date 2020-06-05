@@ -28,7 +28,6 @@ public class PlatformAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.InverseTransformDirection(m_AgentRb.velocity));
-
     }
 
     // Moves the agent depending on its decided action.
