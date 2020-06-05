@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Gustaf Ybring och Patric Wåhlin
+
+// Used to navigate between the different scenes or exit the application.
 public class GameController : MonoBehaviour
 {
  

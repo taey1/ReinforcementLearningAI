@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 
+// Gustaf Ybring och Patric Wåhlin
 public class PlatformAgent : Agent
 {
     public GameObject spawnArea;
@@ -13,23 +14,22 @@ public class PlatformAgent : Agent
     public float rotationSpeed;
     PlatformArea m_MyArea;
     Rigidbody m_AgentRb;
+
+    // Runs on startup, retrieves the rigidbody and area components.
     public override void Initialize()
     {
         m_AgentRb = GetComponent<Rigidbody>();
         m_MyArea = area.GetComponent<PlatformArea>();
     }
 
+    // Collects observations, in this case the agents local direction.
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.InverseTransformDirection(m_AgentRb.velocity));
-        //sensor.AddObservation(m_MyArea.GetCorrectPlatform().transform.localPosition);
-        //sensor.AddObservation(transform.localPosition);
-        //sensor.AddObservation(m_AgentRb.velocity);
-        //sensor.AddObservation(transform.localRotation);
-        //sensor.AddObservation(m_MyArea.GetCorrectPlatform().transform.position - transform.position);
-        //sensor.AddObservation(StepCount / (float)MaxStep);
+
     }
 
+    // Moves the agent depending on its decided action.
     public void MoveAgent(float[] act)
     {
         var dirToGo = Vector3.zero;
@@ -55,12 +55,14 @@ public class PlatformAgent : Agent
         m_AgentRb.AddForce(dirToGo * speed, ForceMode.VelocityChange);
     }
 
+    // Incoming actions, adds a negative reward everytime its called to push the agent to minimize its total amount of actions.
     public override void OnActionReceived(float[] vectorAction)
     {
         AddReward(-0.0002f);
         MoveAgent(vectorAction);
     }
 
+    // Used to manually control the agent to test the environment.
     public override void Heuristic(float[] actionsOut)
     {
         actionsOut[0] = 0;
@@ -82,12 +84,15 @@ public class PlatformAgent : Agent
         }
     }
 
+    // Called initially and everytime the current episode ends because the agent collided with either the goal or a obstacle.
+    // Resets the agent position and the area it acts in.
     public override void OnEpisodeBegin()
     {
         ResetAgent();
         m_MyArea.ResetArea();
     }
 
+    // Resets the agents position and velocity.
     private void ResetAgent()
     {
         transform.position = spawnArea.transform.position;
@@ -95,6 +100,8 @@ public class PlatformAgent : Agent
         m_AgentRb.velocity = Vector3.zero;
     }
 
+    // Checks if the agent has reached the goal (object with "correct" tag) or a obstacle (object with "wrong" tag).
+    // Rewards the agent respectively and ends the episode.
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("correct"))

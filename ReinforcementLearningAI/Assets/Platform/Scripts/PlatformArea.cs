@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+// Gustaf Ybring och Patric Wåhlin
 public class PlatformArea : MonoBehaviour
 {
     public GameObject[] platforms;
@@ -11,12 +12,14 @@ public class PlatformArea : MonoBehaviour
 
     private GameObject correctPlatform;
 
+    // Resets the area.
     public void ResetArea()
     {
         ResetPlatforms();
         SetRandomPlatform();
     }
 
+    // Resets all the platforms by settings its material and tag to the non-goal.
     private void ResetPlatforms()
     {
         foreach (GameObject platform in platforms)
@@ -26,6 +29,7 @@ public class PlatformArea : MonoBehaviour
         }
     }
 
+    // Sets a random platform to the goal by changing its tag and material.
     private void SetRandomPlatform()
     {
         int platformIndex = Random.Range(0, platforms.Length - 1);
@@ -34,11 +38,6 @@ public class PlatformArea : MonoBehaviour
         platform.GetComponent<MeshRenderer>().material = correctPlatformMaterial;
         correctPlatform = platform;
 
-    }
-
-    public GameObject GetCorrectPlatform()
-    {
-        return correctPlatform;
     }
 
 }
