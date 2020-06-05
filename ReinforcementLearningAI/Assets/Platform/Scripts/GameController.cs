@@ -23,6 +23,10 @@ public class GameController : MonoBehaviour
                 SceneManager.LoadScene(0);
             }
 
+        } else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit(0);
         }
+
     }
 }
